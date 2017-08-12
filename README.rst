@@ -3,7 +3,7 @@ subprocess_maximize
 
 This library supplies a Popen implementation that supports process-priority and window-state properties for Windows.
 On other operating systems it works like Popen.
-----
+
 
 Two parameters are added to Popen, `show` for the window-state, and `priority` for the process-priority.
 `priority` can have any integer value from `0`(idle) to `5`(realtime), `2` being the default indicating normal priorty.

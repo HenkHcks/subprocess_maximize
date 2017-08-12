@@ -14,8 +14,11 @@ from os import path
 here = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
+with open(path.join(here, 'README.rst'), 'w', encoding='utf-8') as f2:
+    f2.write(long_description)
+    
 
 setup(
     name='subprocess_maximize',
@@ -23,7 +26,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.9.0',
+    version='0.9.2',
 
     description='Popen with process-priority and window-state',
     long_description=long_description,

@@ -3,6 +3,9 @@
 from subprocess import Popen as Popen_original
 from subprocess import STARTUPINFO
 
+import os
+
+
 #IDLE_PRIORITY         0x00000040 ok
 #BELOW_NORMAL_PRIORITY 0x00004000 ok
 #NORMAL_PRIORITY       0x00000020 ok
@@ -20,14 +23,15 @@ PROCESS_PRIORITIES =[ 0x40,0x00004000,0x00000020,0x00008000,0x00000080,0x0000010
 
 
 def Popen(*args, show='normal', priority=2, **kwargs):
-  if isinstance ( show, str ) :
-    show = WINDOW_STATES[show]
-  if show!=1:
-    startupinfo = kwargs.get('startupinfo', STARTUPINFO() ) 
-    startupinfo.dwFlags |= 1 #subprocess.STARTF_USESHOWWINDOW
-    startupinfo.wShowWindow = show
-    kwargs['startupinfo'] = startupinfo
-  kwargs['creationflags'] = kwargs.get('creationflags', 0 ) | PROCESS_PRIORITIES[priority]
+  if os.name == 'nt':
+    if isinstance ( show, str ) :
+      show = WINDOW_STATES[show]
+    if show!=1:
+      startupinfo = kwargs.get('startupinfo', STARTUPINFO() ) 
+      startupinfo.dwFlags |= 1 #subprocess.STARTF_USESHOWWINDOW
+      startupinfo.wShowWindow = show
+      kwargs['startupinfo'] = startupinfo
+    kwargs['creationflags'] = kwargs.get('creationflags', 0 ) | PROCESS_PRIORITIES[priority]
   return Popen_original(*args, **kwargs)
 
   
