@@ -13,12 +13,20 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
-# Get the long description from the README file
-with open(path.join(here, 'README.md'), encoding='utf-8') as f:
-    long_description = f.read()
-with open(path.join(here, 'README.rst'), 'w', encoding='utf-8') as f2:
-    f2.write(long_description)
+
+
+## Trick to use MarkDown, and still supply Pypi with RST
+##  from: https://stackoverflow.com/a/23265673
+try:
+    from pypandoc import convert
+    read_md = lambda f: convert(f, 'rst').replace('\r\n','\n')
+except ImportError:
+    print("warning: pypandoc module not found, could not convert Markdown to RST")
+    read_md = lambda f: open(f, 'r').read()
+
     
+long_description = read_md(path.join(here, 'README.md'))
+print(repr(long_description))
 
 setup(
     name='subprocess_maximize',
@@ -26,7 +34,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.9.2',
+    version='0.9.3',
 
     description='Popen with process-priority and window-state',
     long_description=long_description,

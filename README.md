@@ -1,5 +1,5 @@
-subprocess_maximize
-=======================
+## subprocess_maximize
+
 
 This library supplies a Popen implementation that supports process-priority and window-state properties for Windows.
 On other operating systems it works like Popen.
